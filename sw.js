@@ -1,6 +1,6 @@
 const CACHE_NAME = 'ramadan-2026-v1';
 const ASSETS = [
-  './ramadan-2026.html',
+  './index.html',
   './manifest.json',
   'https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&family=Noto+Nastaliq+Urdu&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
@@ -12,7 +12,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Cache local files first (guaranteed), external CDN best-effort
-      return cache.addAll(['./ramadan-2026.html', './manifest.json'])
+      return cache.addAll(['./index.html', './manifest.json'])
         .then(() => {
           // Try CDN files but don't fail install if unavailable
           return Promise.allSettled(
@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
       }).catch(() => {
         // Offline fallback for navigation
         if (event.request.mode === 'navigate') {
-          return caches.match('./ramadan-2026.html');
+          return caches.match('./index.html');
         }
       });
     })
