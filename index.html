@@ -1,292 +1,515 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>রমজান ক্যালেন্ডার ২০২৬ | ঢাকা</title>
-    
-    <!-- অ্যাপ আইকন এবং কালার -->
-    <meta name="theme-color" content="#006400">
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d5c3a">
+<meta name="description" content="রমজান ২০২৬ সাহরী-ইফতার সময়সূচী — ঢাকা জেলা">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="রমজান ২০২৬">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230d5c3a'/%3E%3Ctext x='90' y='125' font-size='90' text-anchor='middle'%3E🌙%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<title>রমজান ১৪৪৭ | সাহরী-ইফতার সময়সূচি</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<style>
+:root{--e:#0d5c3a;--ed:#0d3b2e;--ep:#072518;--g:#c9a84c;--gl:#e8c97a;--cr:#fdf6e3;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Noto Serif Bengali',serif;background:var(--ep);color:var(--cr);min-height:100vh;overflow-x:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
+.bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(13,92,58,.3) 0%,transparent 60%),linear-gradient(to bottom,#041a10 0%,#072518 40%,#0d3b2e 100%);}
+.bg::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background-image:radial-gradient(1px 1px at 10% 15%,rgba(255,255,240,.8) 0%,transparent 1px),radial-gradient(1.5px 1.5px at 40% 8%,rgba(255,255,240,.9) 0%,transparent 1px),radial-gradient(1px 1px at 70% 20%,rgba(255,255,240,.7) 0%,transparent 1px),radial-gradient(2px 2px at 85% 5%,rgba(255,255,240,1) 0%,transparent 1px),radial-gradient(1px 1px at 55% 30%,rgba(255,255,240,.5) 0%,transparent 1px),radial-gradient(1px 1px at 25% 40%,rgba(255,255,240,.4) 0%,transparent 1px),radial-gradient(1.5px 1.5px at 90% 35%,rgba(255,255,240,.6) 0%,transparent 1px);}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:14px;}
 
-    <style>
-        /* ফন্ট এবং বেসিক ডিজাইন */
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
-        
-        :root { --primary: #006400; --accent: #ffd700; --bg: #f0f2f5; --text: #333; }
-        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; padding: 0; text-align: center; color: var(--text); padding-bottom: 50px; }
-        
-        /* হেডার */
-        header { background: var(--primary); color: white; padding: 20px 10px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 1.5rem; }
-        h2 { margin: 5px 0 0; font-size: 1rem; opacity: 0.9; }
-        
-        /* কার্ড ডিজাইন */
-        .card { background: white; margin: 15px auto; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); max-width: 600px; width: 90%; }
-        .timer-box { border-left: 5px solid var(--accent); }
-        .timer { font-size: 2rem; font-weight: 700; color: var(--primary); margin: 10px 0; font-variant-numeric: tabular-nums; }
-        .status-text { font-size: 1.1rem; color: #555; }
-        
-        /* বাটন */
-        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
-        .btn { border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-accent { background: var(--accent); color: #000; }
-        .btn:active { transform: scale(0.95); }
-        
-        /* টেবিল */
-        .table-container { overflow-x: auto; margin-top: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; background: white; min-width: 350px; }
-        th { background: #1b5e20; color: white; padding: 12px; position: sticky; top: 0; }
-        td { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-        tr:nth-child(even) { background: #f9f9f9; }
-        
-        /* আজকের দিনের হাইলাইট */
-        tr.active { background: #e8f5e9; border-left: 5px solid var(--accent); font-weight: bold; }
-        tr.active td { color: var(--primary); }
+/* INSTALL BANNER */
+.install-banner{background:linear-gradient(135deg,#0d5c3a,#1a7a50);border:1.5px solid var(--g);border-radius:16px;padding:14px;margin-bottom:12px;display:none;gap:12px;animation:sld .4s ease;}
+.install-banner.show{display:flex;}
+@keyframes sld{from{transform:translateY(-8px);opacity:0}to{transform:translateY(0);opacity:1}}
+.ib-icon{font-size:2.2rem;flex-shrink:0;}
+.ib-text{flex:1;}
+.ib-text strong{color:var(--g);display:block;font-size:.9rem;}
+.ib-text span{color:rgba(255,255,255,.7);font-size:.75rem;line-height:1.5;}
+.ib-btns{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
+.btn-inst{background:var(--g);color:var(--ep);border:none;border-radius:10px;padding:8px 14px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.btn-inst:active{opacity:.8;}
+.btn-dis{background:none;border:none;color:rgba(255,255,255,.35);font-family:inherit;font-size:.7rem;cursor:pointer;text-align:center;}
 
-        /* এলার্ম এনিমেশন */
-        .ringing { animation: pulse-red 1s infinite; }
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+/* iOS GUIDE */
+.ios-guide{background:rgba(13,92,58,.4);border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:14px;margin-bottom:12px;display:none;}
+.ios-guide.show{display:block;}
+.ios-guide h4{color:var(--g);font-size:.88rem;margin-bottom:10px;}
+.ios-step{display:flex;align-items:flex-start;gap:10px;font-size:.8rem;color:rgba(255,255,255,.85);margin-bottom:8px;}
+.ios-n{background:var(--g);color:var(--ep);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.ios-close{margin-top:8px;background:none;border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.45);border-radius:8px;padding:5px;font-family:inherit;font-size:.72rem;cursor:pointer;width:100%;}
 
-        /* ইউটিলিটি */
-        .hidden { display: none; }
-        .footer { font-size: 0.8rem; margin-top: 20px; color: #888; }
-    </style>
+/* OFFLINE */
+.offline{display:none;text-align:center;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:6px;font-size:.72rem;color:var(--g);margin-bottom:10px;}
+.offline.show{display:block;}
+
+/* HEADER */
+.hdr{text-align:center;padding:22px 16px 18px;}
+.bism{font-family:'Noto Nastaliq Urdu',serif;font-size:1.7rem;color:var(--gl);text-shadow:0 0 20px rgba(201,168,76,.5);margin-bottom:6px;}
+.moon{font-size:3rem;display:block;animation:mg 3s ease-in-out infinite alternate;}
+@keyframes mg{from{text-shadow:0 0 10px rgba(201,168,76,.3)}to{text-shadow:0 0 30px rgba(201,168,76,.9),0 0 60px rgba(201,168,76,.4)}}
+.hdr h1{font-size:1.6rem;color:var(--gl);font-weight:700;}
+.hdr h2{font-size:.88rem;color:rgba(232,201,122,.65);margin-top:3px;}
+.hdr p{font-size:.68rem;color:rgba(232,201,122,.4);margin-top:4px;}
+.divider{height:2px;background:linear-gradient(to right,transparent,var(--g),transparent);margin:12px 0;}
+
+/* CLOCK */
+.clock{background:linear-gradient(135deg,rgba(13,92,58,.5),rgba(7,37,24,.8));border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:16px;text-align:center;margin-bottom:12px;}
+.ctime{font-size:2.7rem;font-weight:700;color:var(--gl);letter-spacing:4px;text-shadow:0 0 20px rgba(201,168,76,.5);font-variant-numeric:tabular-nums;}
+.cdate{color:rgba(232,201,122,.65);font-size:.85rem;margin-top:3px;}
+
+/* TODAY */
+.today{background:linear-gradient(135deg,rgba(13,92,58,.6),rgba(7,37,24,.9));border:1.5px solid var(--g);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 0 30px rgba(201,168,76,.15);position:relative;overflow:hidden;}
+.today::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.today-lbl{text-align:center;color:var(--g);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.times{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tbox{border-radius:14px;padding:13px;text-align:center;transition:transform .2s;}
+.tbox:active{transform:scale(.97);}
+.tbox.shr{background:linear-gradient(135deg,#0d2b4a,#1a3d6b);border:1px solid rgba(100,160,230,.4);}
+.tbox.ift{background:linear-gradient(135deg,#4a1f00,#7a3a00);border:1px solid rgba(230,160,50,.4);}
+.tbox-ic{font-size:1.5rem;margin-bottom:2px;}
+.tbox-lb{font-size:.68rem;color:rgba(255,255,255,.55);margin-bottom:2px;}
+.tbox-tm{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:2px;}
+.tbox-sb{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:2px;}
+.rday{text-align:center;color:var(--gl);font-size:.82rem;margin-top:10px;}
+
+/* COUNTDOWN */
+.cdown{background:rgba(13,92,58,.25);border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:13px;text-align:center;margin-bottom:12px;}
+.cd-lb{font-size:.75rem;color:rgba(232,201,122,.5);margin-bottom:5px;}
+.cd-tm{font-size:1.95rem;font-weight:700;color:var(--gl);letter-spacing:3px;font-variant-numeric:tabular-nums;}
+.cd-ev{font-size:.78rem;color:var(--g);margin-top:3px;}
+
+/* ALARM */
+.alarm{background:rgba(13,92,58,.3);border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:14px;margin-bottom:12px;}
+.alarm h3{color:var(--g);font-size:.88rem;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+.arow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:8px;}
+.arow:last-child{border-bottom:none;}
+.alb{font-size:.8rem;color:rgba(255,255,255,.8);}
+.tgl{position:relative;width:48px;height:26px;display:inline-block;flex-shrink:0;}
+.tgl input{opacity:0;width:0;height:0;}
+.tsl{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.2);border-radius:26px;transition:.3s;}
+.tsl::before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;}
+input:checked+.tsl{background:var(--g);}
+input:checked+.tsl::before{transform:translateX(22px);}
+.asel{background:rgba(13,58,38,.8);color:var(--cr);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:4px 8px;font-family:inherit;font-size:.76rem;}
+.bsm{background:transparent;color:var(--g);border:1px solid rgba(201,168,76,.35);border-radius:8px;padding:5px 11px;font-family:inherit;font-size:.73rem;cursor:pointer;transition:all .2s;}
+.bsm:hover{background:rgba(201,168,76,.1);}
+
+/* ACTIONS */
+.acts{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.btn{flex:1;min-width:90px;padding:10px 10px;border-radius:12px;border:1.5px solid;font-family:inherit;font-size:.78rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;font-weight:600;}
+.btn:active{transform:scale(.96);}
+.bp{background:var(--g);color:var(--ep);border-color:var(--g);}
+.bs{background:transparent;color:var(--g);border-color:rgba(201,168,76,.4);}
+.bg2{background:rgba(13,92,58,.5);color:#7ddb9c;border-color:rgba(125,219,156,.4);}
+
+/* TABLE */
+.tcard{background:rgba(7,37,24,.7);border:1px solid rgba(201,168,76,.2);border-radius:16px;overflow:hidden;margin-bottom:16px;}
+.tcard h3{color:var(--g);padding:11px 13px;font-size:.88rem;border-bottom:1px solid rgba(201,168,76,.12);display:flex;align-items:center;gap:5px;}
+.sch{width:100%;border-collapse:collapse;font-size:.8rem;}
+.sch thead tr{background:rgba(13,92,58,.6);}
+.sch th{padding:9px 6px;text-align:center;color:var(--g);font-weight:600;font-size:.72rem;white-space:nowrap;}
+.sch tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s;}
+.sch tbody tr:hover{background:rgba(201,168,76,.07);}
+.sch td{padding:7px 6px;text-align:center;color:rgba(255,255,255,.82);}
+.sch td.dn{color:var(--gl);font-weight:600;}
+.sch td.st{color:#90c8f5;}
+.sch td.ft{color:#b8d4a0;}
+.sch td.it{color:#f5c882;font-weight:600;}
+.rt{background:rgba(201,168,76,.12)!important;border-left:3px solid var(--g);}
+.rt td{color:#fff!important;}
+.tbadge{display:inline-block;background:var(--g);color:var(--ep);font-size:.56rem;padding:1px 4px;border-radius:4px;font-weight:700;vertical-align:middle;margin-left:3px;}
+
+/* FOOTER */
+.fnote{background:rgba(13,92,58,.2);border:1px solid rgba(201,168,76,.12);border-radius:12px;padding:12px;font-size:.7rem;color:rgba(232,201,122,.5);line-height:1.7;margin-bottom:14px;}
+.fcred{text-align:center;color:rgba(255,255,255,.22);font-size:.65rem;padding-bottom:70px;}
+
+/* NOTIF BANNER */
+.nb{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--ed),var(--e));border:2px solid var(--g);border-radius:16px;padding:13px 18px;z-index:9999;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:250px;max-width:88vw;display:none;animation:nbin .4s ease;}
+@keyframes nbin{from{transform:translateX(-50%) translateY(-16px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.nb .ni{font-size:1.7rem;margin-bottom:3px;}
+.nb .nt{color:var(--g);font-size:.9rem;font-weight:700;}
+.nb .nm{color:rgba(255,255,255,.78);font-size:.78rem;margin-top:3px;}
+.nbc{position:absolute;top:7px;right:9px;background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:.95rem;}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:16px;z-index:200;width:54px;height:54px;border-radius:50%;background:var(--g);color:var(--ep);border:none;cursor:pointer;font-size:1.5rem;display:none;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(201,168,76,.5);animation:pg 2.5s ease-in-out infinite;}
+@keyframes pg{0%,100%{box-shadow:0 4px 20px rgba(201,168,76,.4)}50%{box-shadow:0 4px 30px rgba(201,168,76,.8)}}
+.fab.show{display:flex;}
+.fab:active{transform:scale(.92);}
+
+@media(max-width:420px){.ctime{font-size:2.1rem}.tbox-tm{font-size:1.4rem}.hdr h1{font-size:1.35rem}.bism{font-size:1.35rem}}
+</style>
 </head>
 <body>
+<div class="bg"></div>
 
-<header>
-    <h1>সাহরী ও ইফতারের সময়সূচি</h1>
-    <h2>ঢাকা জেলা | রমজান ১৪৪৭ (২০২৬)</h2>
-</header>
+<!-- Notif Banner -->
+<div class="nb" id="nb">
+  <button class="nbc" onclick="closeNb()">✕</button>
+  <div class="ni" id="ni">🌙</div>
+  <div class="nt" id="nt"></div>
+  <div class="nm" id="nm"></div>
+</div>
 
-<div class="card timer-box" id="mainCard">
-    <div class="status-text" id="statusMsg">আজকের সময় লোড হচ্ছে...</div>
-    <div class="timer" id="countdown">--:--:--</div>
-    
-    <div class="btn-group">
-        <button id="alarmToggle" class="btn btn-accent">🔇 এলার্ম চালু করুন</button>
-        <button onclick="downloadPage()" class="btn btn-primary">⬇️ অফলাইনে সেভ করুন</button>
+<!-- FAB -->
+<button class="fab" id="fab" title="হোম স্ক্রিনে যোগ করুন">📲</button>
+
+<div class="wrap">
+  <!-- INSTALL BANNER -->
+  <div class="install-banner" id="instBanner">
+    <div class="ib-icon">📱</div>
+    <div class="ib-text">
+      <strong>অ্যাপ হিসেবে ইন্সটল করুন!</strong>
+      <span>হোম স্ক্রিনে রাখুন। অফলাইনেও চলবে।</span>
     </div>
-</div>
-
-<div class="card" style="padding: 0;">
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>রমজান</th>
-                    <th>তারিখ</th>
-                    <th>সাহরী শেষ</th>
-                    <th>ইফতার</th>
-                </tr>
-            </thead>
-            <tbody id="scheduleBody"></tbody>
-        </table>
+    <div class="ib-btns">
+      <button class="btn-inst" id="instBtn">ইন্সটল করুন</button>
+      <button class="btn-dis" onclick="dismissInst()">পরে করব</button>
     </div>
+  </div>
+
+  <!-- iOS GUIDE -->
+  <div class="ios-guide" id="iosGuide">
+    <h4>📱 iPhone-এ অ্যাপ হিসেবে যোগ করুন</h4>
+    <div class="ios-step"><div class="ios-n">১</div><span>Safari-এর নিচে <strong>শেয়ার বাটন ⬆</strong> চাপুন</span></div>
+    <div class="ios-step"><div class="ios-n">২</div><span><strong>"Add to Home Screen"</strong> সিলেক্ট করুন</span></div>
+    <div class="ios-step"><div class="ios-n">৩</div><span><strong>"Add"</strong> চাপুন — অ্যাপ ইন্সটল হয়ে যাবে 🎉</span></div>
+    <button class="ios-close" onclick="this.closest('.ios-guide').classList.remove('show')">বুঝেছি ✓</button>
+  </div>
+
+  <!-- OFFLINE -->
+  <div class="offline" id="offline">📵 অফলাইন মোড — সব তথ্য সেভ থেকে লোড হচ্ছে</div>
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="bism">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <span class="moon">🌙</span>
+    <h1>সাহরী-ইফতারের সময়সূচি</h1>
+    <h2>ঢাকা জেলা — রমজান ১৪৪৭ হিজরি, ২০২৬</h2>
+    <p>ইসলামিক ফাউন্ডেশন বাংলাদেশ • ধর্ম বিষয়ক মন্ত্রণালয়</p>
+  </div>
+  <div class="divider"></div>
+
+  <!-- CLOCK -->
+  <div class="clock">
+    <div class="ctime" id="ct">--:--:--</div>
+    <div class="cdate" id="cd">লোড হচ্ছে...</div>
+  </div>
+
+  <!-- TODAY -->
+  <div class="today" id="today">
+    <div class="today-lbl">★ আজকের সময়সূচি</div>
+    <div class="times">
+      <div class="tbox shr">
+        <div class="tbox-ic">🌙</div>
+        <div class="tbox-lb">সাহরীর শেষ সময়</div>
+        <div class="tbox-tm" id="ts">--:--</div>
+        <div class="tbox-sb">ফজর আযান: <span id="tf">--:--</span></div>
+      </div>
+      <div class="tbox ift">
+        <div class="tbox-ic">🌅</div>
+        <div class="tbox-lb">ইফতারের সময়</div>
+        <div class="tbox-tm" id="ti">--:--</div>
+        <div class="tbox-sb">মাগরিবের আযানের সাথে</div>
+      </div>
+    </div>
+    <div class="rday" id="rd">রমজান — দিন</div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="cdown">
+    <div class="cd-lb">পরবর্তী ইভেন্ট পর্যন্ত বাকি</div>
+    <div class="cd-tm" id="cdtm">--:--:--</div>
+    <div class="cd-ev" id="cdev">গণনা করা হচ্ছে...</div>
+  </div>
+
+  <!-- ALARM -->
+  <div class="alarm">
+    <h3>🔔 আলার্ম সেটিংস</h3>
+    <div class="arow">
+      <div class="alb">🌙 সাহরী আলার্ম</div>
+      <label class="tgl"><input type="checkbox" id="sa" checked><span class="tsl"></span></label>
+    </div>
+    <div class="arow">
+      <div class="alb">⏳ সাহরীর কত মিনিট আগে?</div>
+      <select class="asel" id="sadv">
+        <option value="5">৫ মিনিট</option><option value="10" selected>১০ মিনিট</option>
+        <option value="15">১৫ মিনিট</option><option value="20">২০ মিনিট</option><option value="30">৩০ মিনিট</option>
+      </select>
+    </div>
+    <div class="arow">
+      <div class="alb">🌅 ইফতার আলার্ম</div>
+      <label class="tgl"><input type="checkbox" id="ia" checked><span class="tsl"></span></label>
+    </div>
+    <div class="arow">
+      <div class="alb">⏳ ইফতারের কত মিনিট আগে?</div>
+      <select class="asel" id="iadv">
+        <option value="5">৫ মিনিট</option><option value="10" selected>১০ মিনিট</option><option value="15">১৫ মিনিট</option>
+      </select>
+    </div>
+    <div class="arow">
+      <div class="alb">🔔 ব্রাউজার নোটিফিকেশন</div>
+      <button class="bsm" id="npb" onclick="askNotif()">অনুমতি নিন</button>
+    </div>
+    <div class="arow">
+      <div class="alb">🎵 আলার্ম টেস্ট করুন</div>
+      <button class="bsm" onclick="testAlarm()">টেস্ট</button>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="acts">
+    <button class="btn bp" onclick="dlImg()">📸 ছবি</button>
+    <button class="btn bs" onclick="dlPDF()">📄 PDF</button>
+    <button class="btn bg2" onclick="shr()">📤 শেয়ার</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="tcard" id="stbl">
+    <h3>📅 সম্পূর্ণ সময়সূচি — রমজান ১৪৪৭</h3>
+    <div style="overflow-x:auto">
+      <table class="sch">
+        <thead><tr><th>রমজান</th><th>তারিখ</th><th>সাহরী শেষ</th><th>ফজর আযান</th><th>ইফতার</th></tr></thead>
+        <tbody id="sb"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="fnote"><strong>★</strong> ১লা রমজান চাঁদ দেখার উপর নির্ভরশীল।<br><br>
+  <strong>নোট:</strong> এই সময়সূচি ইসলামিক ফাউন্ডেশন বাংলাদেশ কর্তৃক প্রণীত। বায়তুল মোকাররম জাতীয় মসজিদের খতীব মহোদয়ের নেতৃত্বে দেশের শীর্ষ মুফতিয়ানে কেরাম কর্তৃক অনুমোদিত।</div>
+  <div class="fcred">© ২০২৬ ইসলামিক ফাউন্ডেশন বাংলাদেশ</div>
 </div>
 
-<div class="footer">
-    ইহা ইসলামিক ফাউন্ডেশনের ২০২৬ সালের ক্যালেন্ডার অনুযায়ী তৈরি।<br>
-    অফলাইন অ্যাপ হিসেবে ব্যবহারের জন্য "অফলাইনে সেভ করুন" বাটনে ক্লিক করুন।
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-    // === ১. ডাটাবেজ (ছবি অনুযায়ী হুবহু ডাটা) ===
-    // মাস: 1 = February, 2 = March (JS এ মাস ০ থেকে শুরু হয় না এখানে আমরা লজিক দিয়ে হ্যান্ডেল করব)
-    const schedule = [
-        { r: 1, d: 19, m: 2, sehri: "05:12", iftar: "17:58" },
-        { r: 2, d: 20, m: 2, sehri: "05:11", iftar: "17:58" },
-        { r: 3, d: 21, m: 2, sehri: "05:11", iftar: "17:59" },
-        { r: 4, d: 22, m: 2, sehri: "05:10", iftar: "17:59" },
-        { r: 5, d: 23, m: 2, sehri: "05:09", iftar: "18:00" },
-        { r: 6, d: 24, m: 2, sehri: "05:08", iftar: "18:00" },
-        { r: 7, d: 25, m: 2, sehri: "05:08", iftar: "18:01" },
-        { r: 8, d: 26, m: 2, sehri: "05:07", iftar: "18:01" },
-        { r: 9, d: 27, m: 2, sehri: "05:06", iftar: "18:02" },
-        { r: 10, d: 28, m: 2, sehri: "05:05", iftar: "18:02" },
-        { r: 11, d: 1, m: 3, sehri: "05:05", iftar: "18:03" },
-        { r: 12, d: 2, m: 3, sehri: "05:04", iftar: "18:03" },
-        { r: 13, d: 3, m: 3, sehri: "05:03", iftar: "18:04" },
-        { r: 14, d: 4, m: 3, sehri: "05:02", iftar: "18:04" },
-        { r: 15, d: 5, m: 3, sehri: "05:01", iftar: "18:05" },
-        { r: 16, d: 6, m: 3, sehri: "05:00", iftar: "18:05" },
-        { r: 17, d: 7, m: 3, sehri: "04:59", iftar: "18:06" },
-        { r: 18, d: 8, m: 3, sehri: "04:58", iftar: "18:06" },
-        { r: 19, d: 9, m: 3, sehri: "04:57", iftar: "18:07" },
-        { r: 20, d: 10, m: 3, sehri: "04:57", iftar: "18:07" },
-        { r: 21, d: 11, m: 3, sehri: "04:56", iftar: "18:07" },
-        { r: 22, d: 12, m: 3, sehri: "04:55", iftar: "18:08" },
-        { r: 23, d: 13, m: 3, sehri: "04:54", iftar: "18:08" },
-        { r: 24, d: 14, m: 3, sehri: "04:53", iftar: "18:09" },
-        { r: 25, d: 15, m: 3, sehri: "04:52", iftar: "18:09" },
-        { r: 26, d: 16, m: 3, sehri: "04:51", iftar: "18:10" },
-        { r: 27, d: 17, m: 3, sehri: "04:50", iftar: "18:10" },
-        { r: 28, d: 18, m: 3, sehri: "04:49", iftar: "18:10" },
-        { r: 29, d: 19, m: 3, sehri: "04:48", iftar: "18:11" },
-        { r: 30, d: 20, m: 3, sehri: "04:47", iftar: "18:11" }
-    ];
+const DATA=[
+  {d:1, e:'2026-02-19',b:'১৯ ফেব্রু', s:'৫:১২',f:'৫:১৫',i:'৫:৫৭',sr:'5:12',ir:'5:57'},
+  {d:2, e:'2026-02-20',b:'২০ ফেব্রু', s:'৫:১১',f:'৫:১৪',i:'৫:৫৭',sr:'5:11',ir:'5:57'},
+  {d:3, e:'2026-02-21',b:'২১ ফেব্রু', s:'৫:১১',f:'৫:১৪',i:'৫:৫৯',sr:'5:11',ir:'5:59'},
+  {d:4, e:'2026-02-22',b:'২২ ফেব্রু', s:'৫:১০',f:'৫:১৩',i:'৫:৫৯',sr:'5:10',ir:'5:59'},
+  {d:5, e:'2026-02-23',b:'২৩ ফেব্রু', s:'৫:০৯',f:'৫:১২',i:'৬:০০',sr:'5:09',ir:'6:00'},
+  {d:6, e:'2026-02-24',b:'২৪ ফেব্রু', s:'৫:০৮',f:'৫:১১',i:'৬:০০',sr:'5:08',ir:'6:00'},
+  {d:7, e:'2026-02-25',b:'২৫ ফেব্রু', s:'৫:০৭',f:'৫:১১',i:'৬:০১',sr:'5:07',ir:'6:01'},
+  {d:8, e:'2026-02-26',b:'২৬ ফেব্রু', s:'৫:০৭',f:'৫:১০',i:'৬:০১',sr:'5:07',ir:'6:01'},
+  {d:9, e:'2026-02-27',b:'২৭ ফেব্রু', s:'৫:০৬',f:'৫:০৯',i:'৬:০২',sr:'5:06',ir:'6:02'},
+  {d:10,e:'2026-02-28',b:'২৮ ফেব্রু', s:'৫:০৫',f:'৫:০৮',i:'৬:০২',sr:'5:05',ir:'6:02'},
+  {d:11,e:'2026-03-01',b:'০১ মার্চ',  s:'৫:০৫',f:'৫:০৮',i:'৬:০৩',sr:'5:05',ir:'6:03'},
+  {d:12,e:'2026-03-02',b:'০২ মার্চ',  s:'৫:০৪',f:'৫:০৭',i:'৬:০৩',sr:'5:04',ir:'6:03'},
+  {d:13,e:'2026-03-03',b:'০৩ মার্চ',  s:'৫:০৩',f:'৫:০৬',i:'৬:০৪',sr:'5:03',ir:'6:04'},
+  {d:14,e:'2026-03-04',b:'০৪ মার্চ',  s:'৫:০২',f:'৫:০৫',i:'৬:০৪',sr:'5:02',ir:'6:04'},
+  {d:15,e:'2026-03-05',b:'০৫ মার্চ',  s:'৫:০১',f:'৫:০৪',i:'৬:০৫',sr:'5:01',ir:'6:05'},
+  {d:16,e:'2026-03-06',b:'০৬ মার্চ',  s:'৫:০০',f:'৫:০৩',i:'৬:০৫',sr:'5:00',ir:'6:05'},
+  {d:17,e:'2026-03-07',b:'০৭ মার্চ',  s:'৪:৫৯',f:'৫:০২',i:'৬:০৬',sr:'4:59',ir:'6:06'},
+  {d:18,e:'2026-03-08',b:'০৮ মার্চ',  s:'৪:৫৮',f:'৫:০১',i:'৬:০৬',sr:'4:58',ir:'6:06'},
+  {d:19,e:'2026-03-09',b:'০৯ মার্চ',  s:'৪:৫৭',f:'৫:০০',i:'৬:০৭',sr:'4:57',ir:'6:07'},
+  {d:20,e:'2026-03-10',b:'১০ মার্চ',  s:'৪:৫৭',f:'৪:৫৯',i:'৬:০৭',sr:'4:57',ir:'6:07'},
+  {d:21,e:'2026-03-11',b:'১১ মার্চ',  s:'৪:৫৬',f:'৪:৫৮',i:'৬:০৯',sr:'4:56',ir:'6:09'},
+  {d:22,e:'2026-03-12',b:'১২ মার্চ',  s:'৪:৫৫',f:'৪:৫৭',i:'৬:০৭',sr:'4:55',ir:'6:07'},
+  {d:23,e:'2026-03-13',b:'১৩ মার্চ',  s:'৪:৫৪',f:'৪:৫৭',i:'৬:০৮',sr:'4:54',ir:'6:08'},
+  {d:24,e:'2026-03-14',b:'১৪ মার্চ',  s:'৪:৫৩',f:'৪:৫৬',i:'৬:০৯',sr:'4:53',ir:'6:09'},
+  {d:25,e:'2026-03-15',b:'১৫ মার্চ',  s:'৪:৫২',f:'৪:৫৫',i:'৬:০৯',sr:'4:52',ir:'6:09'},
+  {d:26,e:'2026-03-16',b:'১৬ মার্চ',  s:'৪:৫১',f:'৪:৫৪',i:'৬:১০',sr:'4:51',ir:'6:10'},
+  {d:27,e:'2026-03-17',b:'১৭ মার্চ',  s:'৪:৫০',f:'৪:৫৩',i:'৬:১০',sr:'4:50',ir:'6:10'},
+  {d:28,e:'2026-03-18',b:'১৮ মার্চ',  s:'৪:৪৯',f:'৪:৫২',i:'৬:১০',sr:'4:49',ir:'6:10'},
+  {d:29,e:'2026-03-19',b:'১৯ মার্চ',  s:'৪:৪৮',f:'৪:৫০',i:'৬:১১',sr:'4:48',ir:'6:11'},
+  {d:30,e:'2026-03-20',b:'২০ মার্চ',  s:'৪:৪৭',f:'৪:৪৯',i:'৬:১১',sr:'4:47',ir:'6:11'},
+];
+const BDN=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+const BMN=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+const bn=n=>String(n).replace(/[0-9]/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const pt=t=>{const[h,m]=t.split(':').map(Number);return h*60+m;};
+const getToday=()=>{const d=new Date();return d.toISOString().split('T')[0];};
+const getTd=()=>DATA.find(x=>x.e===getToday())||null;
 
-    // বাংলা সংখ্যা
-    const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-    const toBn = n => n.toString().replace(/\d/g, d => bnNums[d]);
-    
-    const monthNames = {2: "ফেব্রু", 3: "মার্চ"};
+// ── SERVICE WORKER ──
+if('serviceWorker'in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW:',e));
+}
 
-    function formatTime(time24) {
-        let [h, m] = time24.split(':');
-        h = parseInt(h);
-        if(h > 12) h -= 12;
-        return `${toBn(h)}:${toBn(m)}`;
+// ── ONLINE/OFFLINE ──
+const ofl=()=>document.getElementById('offline').classList.toggle('show',!navigator.onLine);
+window.addEventListener('online',ofl);window.addEventListener('offline',ofl);ofl();
+
+// ── PWA INSTALL ──
+let dp=null;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+const isSA=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); dp=e;
+  document.getElementById('instBanner').classList.add('show');
+  document.getElementById('fab').classList.add('show');
+  document.getElementById('instBtn').onclick=doInst;
+  document.getElementById('fab').onclick=doInst;
+});
+async function doInst(){
+  if(!dp)return;
+  dp.prompt();
+  const{outcome}=await dp.userChoice;
+  if(outcome==='accepted'){dismissInst();showBanner('🎉','ইন্সটল সফল!','হোম স্ক্রিনে অ্যাপ যোগ হয়েছে।');}
+  dp=null;
+}
+function dismissInst(){
+  document.getElementById('instBanner').classList.remove('show');
+  document.getElementById('fab').classList.remove('show');
+}
+if(isIOS&&!isSA) document.getElementById('iosGuide').classList.add('show');
+window.addEventListener('appinstalled',()=>{
+  dismissInst();
+  document.getElementById('iosGuide').classList.remove('show');
+  showBanner('🎉','অ্যাপ ইন্সটল হয়েছে!','হোম স্ক্রিন থেকে সরাসরি খুলতে পারবেন।');
+});
+
+// ── AUDIO ──
+let actx=null;
+const gctx=()=>{if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;};
+function playAdhan(){
+  const c=gctx();
+  [[440,0,.5],[550,.6,.5],[495,1.2,.5],[440,1.8,.8],[550,2.8,.5],[660,3.4,.5],[605,4,.5],[550,4.6,1.2]].forEach(([f,t,d])=>{
+    const o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0,c.currentTime+t);g.gain.linearRampToValueAtTime(.4,c.currentTime+t+.1);g.gain.linearRampToValueAtTime(0,c.currentTime+t+d);
+    o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.1);
+  });
+}
+function playBeep(){
+  const c=gctx();
+  for(let i=0;i<3;i++){
+    const o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=880;
+    g.gain.setValueAtTime(0,c.currentTime+i*.4);g.gain.linearRampToValueAtTime(.3,c.currentTime+i*.4+.05);g.gain.linearRampToValueAtTime(0,c.currentTime+i*.4+.25);
+    o.start(c.currentTime+i*.4);o.stop(c.currentTime+i*.4+.3);
+  }
+}
+function testAlarm(){playAdhan();showBanner('🎵','টেস্ট আলার্ম','আলার্ম সঠিকভাবে কাজ করছে!');}
+
+// ── NOTIFICATIONS ──
+async function askNotif(){
+  if(!('Notification'in window)){alert('নোটিফিকেশন সাপোর্ট নেই।');return;}
+  const p=await Notification.requestPermission();
+  const b=document.getElementById('npb');
+  if(p==='granted'){b.textContent='✓ পাওয়া গেছে';b.style.color='#7ddb9c';}
+  else{b.textContent='✗ অনুমতি নেই';}
+}
+function sendNotif(t,m){if(Notification.permission==='granted')new Notification(t,{body:m,icon:'🌙'});}
+if(Notification.permission==='granted'){const b=document.getElementById('npb');b.textContent='✓ পাওয়া গেছে';b.style.color='#7ddb9c';}
+
+// ── BANNER ──
+let bto=null;
+function showBanner(ic,tt,ms){
+  document.getElementById('ni').textContent=ic;document.getElementById('nt').textContent=tt;document.getElementById('nm').textContent=ms;
+  const b=document.getElementById('nb');b.style.display='block';
+  if(bto)clearTimeout(bto);bto=setTimeout(()=>b.style.display='none',8000);
+}
+function closeNb(){document.getElementById('nb').style.display='none';}
+
+// ── TABLE ──
+function buildTable(){
+  const tbody=document.getElementById('sb'),td=getTd();
+  tbody.innerHTML='';
+  DATA.forEach(x=>{
+    const isT=td&&x.d===td.d;
+    const tr=document.createElement('tr');
+    if(isT)tr.classList.add('rt');
+    tr.innerHTML=`<td class="dn">${bn(x.d)}${x.d===1?' ★':''}</td><td>${x.b}${isT?'<span class="tbadge">আজ</span>':''}</td><td class="st">${x.s}</td><td class="ft">${x.f}</td><td class="it">${x.i}</td>`;
+    tbody.appendChild(tr);
+    if(isT)setTimeout(()=>tr.scrollIntoView({behavior:'smooth',block:'center'}),600);
+  });
+}
+
+// ── TODAY CARD ──
+function updateToday(x){
+  if(!x){document.getElementById('rd').textContent='রমজানের বাইরে';return;}
+  document.getElementById('ts').textContent=x.s;
+  document.getElementById('tf').textContent=x.f;
+  document.getElementById('ti').textContent=x.i;
+  document.getElementById('rd').textContent=`রমজান ${bn(x.d)} — ${x.b}`;
+}
+
+// ── ALARM STATE ──
+let fr={sw:0,st:0,iw:0,it:0};
+
+// ── CLOCK TICK ──
+function tick(){
+  const now=new Date();
+  const h=String(now.getHours()).padStart(2,'0');
+  const m=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('ct').textContent=`${h}:${m}:${s}`;
+  document.getElementById('cd').textContent=`${BDN[now.getDay()]}, ${bn(now.getDate())} ${BMN[now.getMonth()]} ${bn(now.getFullYear())}`;
+  const x=getTd();
+  const nm=now.getHours()*60+now.getMinutes();
+  const sec=now.getSeconds();
+  if(x){
+    const sm=pt(x.sr),im=pt(x.ir);
+    const sa=+document.getElementById('sadv').value;
+    const ia=+document.getElementById('iadv').value;
+    const son=document.getElementById('sa').checked;
+    const ion=document.getElementById('ia').checked;
+    const day=now.toDateString();
+    if(son&&fr.sw!==day&&nm===sm-sa&&sec<5){fr.sw=day;playBeep();const msg=`${bn(sa)} মিনিট পরে সাহরীর সময় শেষ!`;showBanner('🌙','সাহরী সতর্কতা!',msg);sendNotif('🌙 সাহরী সতর্কতা!',msg);}
+    if(son&&fr.st!==day&&nm===sm&&sec<5){fr.st=day;playAdhan();showBanner('🌙','সাহরীর সময় শেষ!','ফজরের নামাজ আদায় করুন।');sendNotif('🌙 সাহরীর সময় শেষ!','ফজরের নামাজ আদায় করুন।');}
+    if(ion&&fr.iw!==day&&nm===im-ia&&sec<5){fr.iw=day;playBeep();const msg=`${bn(ia)} মিনিট পরে ইফতার!`;showBanner('🌅','ইফতার সতর্কতা!',msg);sendNotif('🌅 ইফতার সতর্কতা!',msg);}
+    if(ion&&fr.it!==day&&nm===im&&sec<5){fr.it=day;playAdhan();showBanner('🌅','ইফতারের সময়!','আলহামদুলিল্লাহ! ইফতার করুন।');sendNotif('🌅 ইফতারের সময়!','আলহামদুলিল্লাহ!');}
+    // Countdown
+    let tgt,lbl;
+    if(nm<sm){tgt=sm;lbl='🌙 সাহরীর সময় শেষ হবে';}
+    else if(nm<im){tgt=im;lbl='🌅 ইফতারের সময়';}
+    else{
+      const nd=DATA.find(n=>n.d===x.d+1);
+      if(nd){
+        const diff=(24*60-nm)+pt(nd.sr);
+        const dh=Math.floor(diff/60),dm=diff%60;
+        document.getElementById('cdtm').textContent=`${bn(String(dh).padStart(2,'0'))}:${bn(String(dm).padStart(2,'0'))}:${bn(String(59-sec).padStart(2,'0'))}`;
+        document.getElementById('cdev').textContent=`🌙 আগামীকাল সাহরী — ${nd.s}`;
+        return;
+      }
+      document.getElementById('cdtm').textContent='০০:০০:০০';
+      document.getElementById('cdev').textContent='রমজান সম্পন্ন 🌙';
+      return;
     }
+    const diff=(tgt-nm)*60-sec;
+    const dh=Math.floor(diff/3600),dm=Math.floor((diff%3600)/60),ds=diff%60;
+    document.getElementById('cdtm').textContent=`${bn(String(dh).padStart(2,'0'))}:${bn(String(dm).padStart(2,'0'))}:${bn(String(ds).padStart(2,'0'))}`;
+    document.getElementById('cdev').textContent=lbl;
+  } else {
+    document.getElementById('cdtm').textContent='--:--:--';
+    document.getElementById('cdev').textContent='আজ রমজান নেই';
+  }
+}
 
-    // === ২. টেবিল রেন্ডারিং ===
-    const tbody = document.getElementById('scheduleBody');
-    schedule.forEach(day => {
-        const row = document.createElement('tr');
-        row.id = `day-${day.r}`;
-        row.innerHTML = `
-            <td>${toBn(day.r)}</td>
-            <td>${toBn(day.d)} ${monthNames[day.m]}</td>
-            <td>${formatTime(day.sehri)}</td>
-            <td>${formatTime(day.iftar)}</td>
-        `;
-        tbody.appendChild(row);
-    });
+// ── DOWNLOAD ──
+async function dlImg(){
+  try{const c=await html2canvas(document.getElementById('stbl'),{backgroundColor:'#072518',scale:2,useCORS:true});const a=document.createElement('a');a.download='ramadan-2026.png';a.href=c.toDataURL('image/png');a.click();}
+  catch(e){alert('ডাউনলোড করতে সমস্যা হয়েছে।');}
+}
+async function dlPDF(){
+  try{
+    const c=await html2canvas(document.getElementById('stbl'),{backgroundColor:'#072518',scale:2,useCORS:true});
+    const{jsPDF}=window.jspdf;const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const w=pdf.internal.pageSize.getWidth(),h=(c.height*w)/c.width;
+    pdf.setFillColor(7,37,24);pdf.rect(0,0,w,297,'F');
+    pdf.addImage(c.toDataURL('image/png'),'PNG',0,15,w,h);
+    pdf.save('ramadan-2026.pdf');
+  }catch(e){alert('PDF তৈরি করতে সমস্যা হয়েছে।');}
+}
+async function shr(){
+  if(navigator.share){await navigator.share({title:'রমজান ১৪৪৭ সময়সূচি',text:'ঢাকার সাহরী-ইফতার সময়সূচি',url:window.location.href});}
+  else{navigator.clipboard.writeText(window.location.href).then(()=>showBanner('📤','লিংক কপি!','এখন শেয়ার করতে পারবেন।'));}
+}
 
-    // === ৩. টাইমার এবং লজিক ===
-    let alarmEnabled = false;
-    let alarmTriggered = false;
-    
-    // ব্রাউজারের স্পিচ সিন্থেসিস (Text-to-Speech) ব্যবহার করে এলার্ম (সম্পূর্ণ অফলাইন)
-    function speak(text) {
-        if (!alarmEnabled) return;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'bn-BD'; // বাংলা বাচনভঙ্গি
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
-    }
-
-    // বীপ সাউন্ড (Base64) - যাতে কোনো ফাইল ডাউনলোড করতে না হয়
-    const beepSound = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU"); // (খুব ছোট ডামি, আসল সাউন্ড নিচের লজিকে)
-
-    function updateTimer() {
-        const now = new Date();
-        const currentMonth = now.getMonth() + 1; // JS month 0-11
-        const currentDate = now.getDate();
-
-        // আজকের ডাটা বের করা
-        let today = schedule.find(s => s.d === currentDate && s.m === currentMonth);
-        
-        // হাইলাইট লজিক
-        document.querySelectorAll('tr').forEach(tr => tr.classList.remove('active'));
-        if (today) {
-            const row = document.getElementById(`day-${today.r}`);
-            if(row) {
-                row.classList.add('active');
-                row.scrollIntoView({behavior: 'smooth', block: 'center'});
-            }
-        } else {
-            document.getElementById('statusMsg').innerText = "আজকের কোনো শিডিউল নেই";
-            return;
-        }
-
-        // সময়ের হিসাব
-        const sehriTime = new Date(now.getFullYear(), today.m - 1, today.d, ...today.sehri.split(':'));
-        const iftarTime = new Date(now.getFullYear(), today.m - 1, today.d, ...today.iftar.split(':'));
-        
-        let target, mode, msg;
-
-        if (now < sehriTime) {
-            target = sehriTime;
-            mode = 'sehri';
-            msg = `আজকের সাহরীর শেষ সময়: ${formatTime(today.sehri)}`;
-        } else if (now < iftarTime) {
-            target = iftarTime;
-            mode = 'iftar';
-            msg = `আজকের ইফতারের সময়: ${formatTime(today.iftar)}`;
-        } else {
-            // আগামীকালের জন্য
-            msg = "আজকের ইফতার সম্পন্ন হয়েছে";
-            document.getElementById('statusMsg').innerText = msg;
-            document.getElementById('countdown').innerText = "----";
-            return;
-        }
-
-        document.getElementById('statusMsg').innerText = msg;
-
-        // কাউন্টডাউন
-        const diff = target - now;
-        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const m = Math.floor((diff / (1000 * 60)) % 60);
-        const s = Math.floor((diff / 1000) % 60);
-
-        document.getElementById('countdown').innerText = `${toBn(h)} : ${toBn(m)} : ${toBn(s)}`;
-        
-        // রঙ পরিবর্তন (শেষ ৫ মিনিট)
-        const totalMinutesLeft = (diff / 1000) / 60;
-        if (totalMinutesLeft <= 5) {
-            document.getElementById('countdown').style.color = 'red';
-        } else {
-            document.getElementById('countdown').style.color = 'var(--primary)';
-        }
-
-        // এলার্ম লজিক
-        if (h === 0 && m === 0 && s === 0 && alarmEnabled && !alarmTriggered) {
-            alarmTriggered = true;
-            document.getElementById('mainCard').classList.add('ringing');
-            
-            // ৩ বার বলা হবে
-            let count = 0;
-            const interval = setInterval(() => {
-                const phrase = mode === 'sehri' ? "সাহরীর সময় শেষ হয়েছে।" : "ইফতারের সময় হয়েছে।";
-                speak(phrase);
-                count++;
-                if(count >= 3) {
-                    clearInterval(interval);
-                    document.getElementById('mainCard').classList.remove('ringing');
-                    alarmTriggered = false;
-                }
-            }, 3000);
-        }
-    }
-
-    // === ৪. ইভেন্ট লিসেনার ===
-    document.getElementById('alarmToggle').addEventListener('click', function() {
-        alarmEnabled = !alarmEnabled;
-        if (alarmEnabled) {
-            this.innerText = "🔊 এলার্ম চালু আছে";
-            this.classList.remove('btn-accent');
-            this.classList.add('btn-primary');
-            // পারমিশন ট্রিক
-            speak(" ");
-        } else {
-            this.innerText = "🔇 এলার্ম চালু করুন";
-            this.classList.add('btn-accent');
-            this.classList.remove('btn-primary');
-        }
-    });
-
-    // ডাউনলোড ফাংশন (এই ফাইলটিকেই আবার ডাউনলোড করবে)
-    function downloadPage() {
-        const htmlContent = document.documentElement.outerHTML;
-        const blob = new Blob([htmlContent], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'ramadan_schedule_2026.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        alert("ফাইলটি ডাউনলোড হয়েছে। এটি আপনার ফোনের 'Files' এ গিয়ে ওপেন করুন, ইন্টারনেট ছাড়াই চলবে।");
-    }
-
-    // প্রতি সেকেন্ডে আপডেট
-    setInterval(updateTimer, 1000);
-    updateTimer(); // লোড হওয়ার সাথে সাথে একবার কল
-
+// ── INIT ──
+buildTable();
+updateToday(getTd());
+tick();
+setInterval(tick,1000);
 </script>
-
 </body>
 </html>
