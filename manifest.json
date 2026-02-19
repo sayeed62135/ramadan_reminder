@@ -2,7 +2,7 @@
   "name": "রমজান ১৪৪৭ | সাহরী-ইফতার সময়সূচি",
   "short_name": "রমজান ২০২৬",
   "description": "ঢাকা জেলার সাহরী-ইফতার সময়সূচি ও আলার্ম",
-  "start_url": "./ramadan-2026.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#072518",
