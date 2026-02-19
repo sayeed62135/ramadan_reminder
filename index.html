@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রমজান ক্যালেন্ডার ২০২৬ | ঢাকা</title>
+    
+    <!-- অ্যাপ আইকন এবং কালার -->
+    <meta name="theme-color" content="#006400">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+
+    <style>
+        /* ফন্ট এবং বেসিক ডিজাইন */
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        
+        :root { --primary: #006400; --accent: #ffd700; --bg: #f0f2f5; --text: #333; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; padding: 0; text-align: center; color: var(--text); padding-bottom: 50px; }
+        
+        /* হেডার */
+        header { background: var(--primary); color: white; padding: 20px 10px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { margin: 0; font-size: 1.5rem; }
+        h2 { margin: 5px 0 0; font-size: 1rem; opacity: 0.9; }
+        
+        /* কার্ড ডিজাইন */
+        .card { background: white; margin: 15px auto; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); max-width: 600px; width: 90%; }
+        .timer-box { border-left: 5px solid var(--accent); }
+        .timer { font-size: 2rem; font-weight: 700; color: var(--primary); margin: 10px 0; font-variant-numeric: tabular-nums; }
+        .status-text { font-size: 1.1rem; color: #555; }
+        
+        /* বাটন */
+        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+        .btn { border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-accent { background: var(--accent); color: #000; }
+        .btn:active { transform: scale(0.95); }
+        
+        /* টেবিল */
+        .table-container { overflow-x: auto; margin-top: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; background: white; min-width: 350px; }
+        th { background: #1b5e20; color: white; padding: 12px; position: sticky; top: 0; }
+        td { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        
+        /* আজকের দিনের হাইলাইট */
+        tr.active { background: #e8f5e9; border-left: 5px solid var(--accent); font-weight: bold; }
+        tr.active td { color: var(--primary); }
+
+        /* এলার্ম এনিমেশন */
+        .ringing { animation: pulse-red 1s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+
+        /* ইউটিলিটি */
+        .hidden { display: none; }
+        .footer { font-size: 0.8rem; margin-top: 20px; color: #888; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>সাহরী ও ইফতারের সময়সূচি</h1>
+    <h2>ঢাকা জেলা | রমজান ১৪৪৭ (২০২৬)</h2>
+</header>
+
+<div class="card timer-box" id="mainCard">
+    <div class="status-text" id="statusMsg">আজকের সময় লোড হচ্ছে...</div>
+    <div class="timer" id="countdown">--:--:--</div>
+    
+    <div class="btn-group">
+        <button id="alarmToggle" class="btn btn-accent">🔇 এলার্ম চালু করুন</button>
+        <button onclick="downloadPage()" class="btn btn-primary">⬇️ অফলাইনে সেভ করুন</button>
+    </div>
+</div>
+
+<div class="card" style="padding: 0;">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>রমজান</th>
+                    <th>তারিখ</th>
+                    <th>সাহরী শেষ</th>
+                    <th>ইফতার</th>
+                </tr>
+            </thead>
+            <tbody id="scheduleBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="footer">
+    ইহা ইসলামিক ফাউন্ডেশনের ২০২৬ সালের ক্যালেন্ডার অনুযায়ী তৈরি।<br>
+    অফলাইন অ্যাপ হিসেবে ব্যবহারের জন্য "অফলাইনে সেভ করুন" বাটনে ক্লিক করুন।
+</div>
+
+<script>
+    // === ১. ডাটাবেজ (ছবি অনুযায়ী হুবহু ডাটা) ===
+    // মাস: 1 = February, 2 = March (JS এ মাস ০ থেকে শুরু হয় না এখানে আমরা লজিক দিয়ে হ্যান্ডেল করব)
+    const schedule = [
+        { r: 1, d: 19, m: 2, sehri: "05:12", iftar: "17:58" },
+        { r: 2, d: 20, m: 2, sehri: "05:11", iftar: "17:58" },
+        { r: 3, d: 21, m: 2, sehri: "05:11", iftar: "17:59" },
+        { r: 4, d: 22, m: 2, sehri: "05:10", iftar: "17:59" },
+        { r: 5, d: 23, m: 2, sehri: "05:09", iftar: "18:00" },
+        { r: 6, d: 24, m: 2, sehri: "05:08", iftar: "18:00" },
+        { r: 7, d: 25, m: 2, sehri: "05:08", iftar: "18:01" },
+        { r: 8, d: 26, m: 2, sehri: "05:07", iftar: "18:01" },
+        { r: 9, d: 27, m: 2, sehri: "05:06", iftar: "18:02" },
+        { r: 10, d: 28, m: 2, sehri: "05:05", iftar: "18:02" },
+        { r: 11, d: 1, m: 3, sehri: "05:05", iftar: "18:03" },
+        { r: 12, d: 2, m: 3, sehri: "05:04", iftar: "18:03" },
+        { r: 13, d: 3, m: 3, sehri: "05:03", iftar: "18:04" },
+        { r: 14, d: 4, m: 3, sehri: "05:02", iftar: "18:04" },
+        { r: 15, d: 5, m: 3, sehri: "05:01", iftar: "18:05" },
+        { r: 16, d: 6, m: 3, sehri: "05:00", iftar: "18:05" },
+        { r: 17, d: 7, m: 3, sehri: "04:59", iftar: "18:06" },
+        { r: 18, d: 8, m: 3, sehri: "04:58", iftar: "18:06" },
+        { r: 19, d: 9, m: 3, sehri: "04:57", iftar: "18:07" },
+        { r: 20, d: 10, m: 3, sehri: "04:57", iftar: "18:07" },
+        { r: 21, d: 11, m: 3, sehri: "04:56", iftar: "18:07" },
+        { r: 22, d: 12, m: 3, sehri: "04:55", iftar: "18:08" },
+        { r: 23, d: 13, m: 3, sehri: "04:54", iftar: "18:08" },
+        { r: 24, d: 14, m: 3, sehri: "04:53", iftar: "18:09" },
+        { r: 25, d: 15, m: 3, sehri: "04:52", iftar: "18:09" },
+        { r: 26, d: 16, m: 3, sehri: "04:51", iftar: "18:10" },
+        { r: 27, d: 17, m: 3, sehri: "04:50", iftar: "18:10" },
+        { r: 28, d: 18, m: 3, sehri: "04:49", iftar: "18:10" },
+        { r: 29, d: 19, m: 3, sehri: "04:48", iftar: "18:11" },
+        { r: 30, d: 20, m: 3, sehri: "04:47", iftar: "18:11" }
+    ];
+
+    // বাংলা সংখ্যা
+    const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    const toBn = n => n.toString().replace(/\d/g, d => bnNums[d]);
+    
+    const monthNames = {2: "ফেব্রু", 3: "মার্চ"};
+
+    function formatTime(time24) {
+        let [h, m] = time24.split(':');
+        h = parseInt(h);
+        if(h > 12) h -= 12;
+        return `${toBn(h)}:${toBn(m)}`;
+    }
+
+    // === ২. টেবিল রেন্ডারিং ===
+    const tbody = document.getElementById('scheduleBody');
+    schedule.forEach(day => {
+        const row = document.createElement('tr');
+        row.id = `day-${day.r}`;
+        row.innerHTML = `
+            <td>${toBn(day.r)}</td>
+            <td>${toBn(day.d)} ${monthNames[day.m]}</td>
+            <td>${formatTime(day.sehri)}</td>
+            <td>${formatTime(day.iftar)}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    // === ৩. টাইমার এবং লজিক ===
+    let alarmEnabled = false;
+    let alarmTriggered = false;
+    
+    // ব্রাউজারের স্পিচ সিন্থেসিস (Text-to-Speech) ব্যবহার করে এলার্ম (সম্পূর্ণ অফলাইন)
+    function speak(text) {
+        if (!alarmEnabled) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'bn-BD'; // বাংলা বাচনভঙ্গি
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // বীপ সাউন্ড (Base64) - যাতে কোনো ফাইল ডাউনলোড করতে না হয়
+    const beepSound = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU"); // (খুব ছোট ডামি, আসল সাউন্ড নিচের লজিকে)
+
+    function updateTimer() {
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1; // JS month 0-11
+        const currentDate = now.getDate();
+
+        // আজকের ডাটা বের করা
+        let today = schedule.find(s => s.d === currentDate && s.m === currentMonth);
+        
+        // হাইলাইট লজিক
+        document.querySelectorAll('tr').forEach(tr => tr.classList.remove('active'));
+        if (today) {
+            const row = document.getElementById(`day-${today.r}`);
+            if(row) {
+                row.classList.add('active');
+                row.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+        } else {
+            document.getElementById('statusMsg').innerText = "আজকের কোনো শিডিউল নেই";
+            return;
+        }
+
+        // সময়ের হিসাব
+        const sehriTime = new Date(now.getFullYear(), today.m - 1, today.d, ...today.sehri.split(':'));
+        const iftarTime = new Date(now.getFullYear(), today.m - 1, today.d, ...today.iftar.split(':'));
+        
+        let target, mode, msg;
+
+        if (now < sehriTime) {
+            target = sehriTime;
+            mode = 'sehri';
+            msg = `আজকের সাহরীর শেষ সময়: ${formatTime(today.sehri)}`;
+        } else if (now < iftarTime) {
+            target = iftarTime;
+            mode = 'iftar';
+            msg = `আজকের ইফতারের সময়: ${formatTime(today.iftar)}`;
+        } else {
+            // আগামীকালের জন্য
+            msg = "আজকের ইফতার সম্পন্ন হয়েছে";
+            document.getElementById('statusMsg').innerText = msg;
+            document.getElementById('countdown').innerText = "----";
+            return;
+        }
+
+        document.getElementById('statusMsg').innerText = msg;
+
+        // কাউন্টডাউন
+        const diff = target - now;
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('countdown').innerText = `${toBn(h)} : ${toBn(m)} : ${toBn(s)}`;
+        
+        // রঙ পরিবর্তন (শেষ ৫ মিনিট)
+        const totalMinutesLeft = (diff / 1000) / 60;
+        if (totalMinutesLeft <= 5) {
+            document.getElementById('countdown').style.color = 'red';
+        } else {
+            document.getElementById('countdown').style.color = 'var(--primary)';
+        }
+
+        // এলার্ম লজিক
+        if (h === 0 && m === 0 && s === 0 && alarmEnabled && !alarmTriggered) {
+            alarmTriggered = true;
+            document.getElementById('mainCard').classList.add('ringing');
+            
+            // ৩ বার বলা হবে
+            let count = 0;
+            const interval = setInterval(() => {
+                const phrase = mode === 'sehri' ? "সাহরীর সময় শেষ হয়েছে।" : "ইফতারের সময় হয়েছে।";
+                speak(phrase);
+                count++;
+                if(count >= 3) {
+                    clearInterval(interval);
+                    document.getElementById('mainCard').classList.remove('ringing');
+                    alarmTriggered = false;
+                }
+            }, 3000);
+        }
+    }
+
+    // === ৪. ইভেন্ট লিসেনার ===
+    document.getElementById('alarmToggle').addEventListener('click', function() {
+        alarmEnabled = !alarmEnabled;
+        if (alarmEnabled) {
+            this.innerText = "🔊 এলার্ম চালু আছে";
+            this.classList.remove('btn-accent');
+            this.classList.add('btn-primary');
+            // পারমিশন ট্রিক
+            speak(" ");
+        } else {
+            this.innerText = "🔇 এলার্ম চালু করুন";
+            this.classList.add('btn-accent');
+            this.classList.remove('btn-primary');
+        }
+    });
+
+    // ডাউনলোড ফাংশন (এই ফাইলটিকেই আবার ডাউনলোড করবে)
+    function downloadPage() {
+        const htmlContent = document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ramadan_schedule_2026.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        alert("ফাইলটি ডাউনলোড হয়েছে। এটি আপনার ফোনের 'Files' এ গিয়ে ওপেন করুন, ইন্টারনেট ছাড়াই চলবে।");
+    }
+
+    // প্রতি সেকেন্ডে আপডেট
+    setInterval(updateTimer, 1000);
+    updateTimer(); // লোড হওয়ার সাথে সাথে একবার কল
+
+</script>
+
+</body>
+</html>
