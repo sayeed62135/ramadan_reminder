@@ -1,0 +1,35 @@
+{
+  "name": "রমজান ১৪৪৭ | সাহরী-ইফতার সময়সূচি",
+  "short_name": "রমজান ২০২৬",
+  "description": "ঢাকা জেলার সাহরী-ইফতার সময়সূচি ও আলার্ম",
+  "start_url": "./ramadan-2026.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#072518",
+  "theme_color": "#0d5c3a",
+  "lang": "bn",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='24' fill='%230d5c3a'/%3E%3Ctext x='96' y='130' font-size='100' text-anchor='middle'%3E🌙%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='64' fill='%230d5c3a'/%3E%3Ctext x='256' y='350' font-size='280' text-anchor='middle'%3E🌙%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "আজকের সময়সূচি",
+      "short_name": "আজ",
+      "description": "আজকের সাহরী ও ইফতারের সময়",
+      "url": "./ramadan-2026.html#today"
+    }
+  ]
+}
